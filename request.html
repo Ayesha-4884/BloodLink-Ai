@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BloodLink AI - Smart blood donor matching network powered by AI">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩸</text></svg>" type="image/svg+xml">
+  <title>Request Blood — BloodLink AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="page-request">
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-content">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">&#9829;</span> BloodLink <span class="logo-ai">AI</span>
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span class="theme-icon moon">&#9790;</span>
+        <span class="theme-icon sun">&#9728;</span>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="request.html" class="active">Request Blood</a></li>
+        <li><a href="matching.html">Smart Match</a></li>
+        <li><a href="history.html">History</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>Request Blood</h1>
+      <p>Need blood urgently? Submit a request and our AI will find compatible donors near you instantly.</p>
+    </div>
+  </section>
+
+   <!-- Request Blood -->
+  <section class="section section-alt" id="request">
+    <div class="container">
+      <div class="form-card">
+        <form id="requestForm" novalidate>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="patientName">Patient Name <span class="required">*</span></label>
+              <input type="text" id="patientName" placeholder="e.g. Fatima Noor" required aria-describedby="patientNameError" aria-invalid="false">
+              <span class="error-msg" id="patientNameError"></span>
+            </div>
+            <div class="form-group">
+              <label for="requestBlood">Blood Group Needed <span class="required">*</span></label>
+              <select id="requestBlood" required aria-describedby="requestBloodError" aria-invalid="false">
+                <option value="">Select Blood Group</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+              </select>
+              <span class="error-msg" id="requestBloodError"></span>
+            </div>
+            <div class="form-group">
+              <label for="unitsNeeded">Units Needed <span class="required">*</span></label>
+              <input type="number" id="unitsNeeded" placeholder="e.g. 2" min="1" max="10" required aria-describedby="unitsNeededError" aria-invalid="false">
+              <span class="error-msg" id="unitsNeededError"></span>
+            </div>
+            <div class="form-group">
+              <label for="requestLocation">Hospital / Location <span class="required">*</span></label>
+              <input type="text" id="requestLocation" list="cityList" placeholder="e.g. Jinnah Hospital, Lahore" required aria-describedby="requestLocationError" aria-invalid="false">
+              <span class="error-msg" id="requestLocationError"></span>
+            </div>
+            <div class="form-group">
+              <label for="urgency">Urgency Level <span class="required">*</span></label>
+              <select id="urgency" required aria-describedby="urgencyError" aria-invalid="false">
+                <option value="">Select Urgency</option>
+                <option value="critical">&#128308; Critical - Immediate</option>
+                <option value="high">&#128992; High - Within 6 hours</option>
+                <option value="medium">&#128993; Medium - Within 24 hours</option>
+                <option value="low">&#128994; Low - Within 48 hours</option>
+              </select>
+              <span class="error-msg" id="urgencyError"></span>
+            </div>
+            <div class="form-group">
+              <label for="contactNumber">Contact Number <span class="required">*</span></label>
+              <input type="tel" id="contactNumber" placeholder="e.g. +92 321 2345678" required aria-describedby="contactNumberError" aria-invalid="false">
+              <span class="error-msg" id="contactNumberError"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="additionalNotes">Additional Notes (Optional)</label>
+            <textarea id="additionalNotes" rows="3" placeholder="Any additional information about the request..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-danger btn-block">
+            <span class="btn-icon">&#128680;</span> Submit Blood Request
+          </button>
+        </form>
+      </div>
+
+      <!-- Request Status Tracker -->
+      <div id="requestTracker" class="request-tracker" style="display:none;">
+        <h3 class="tracker-title">&#128666; Request Status Tracker</h3>
+        <div class="tracker-card">
+          <div class="tracker-header">
+            <span class="tracker-id" id="trackerId"></span>
+            <span class="tracker-blood" id="trackerBlood"></span>
+          </div>
+          <div class="tracker-steps">
+            <div class="tracker-step active" id="step-searching">
+              <div class="step-dot"><span class="step-pulse"></span></div>
+              <div class="step-content">
+                <strong>Searching</strong>
+                <p>Finding compatible donors near you...</p>
+              </div>
+            </div>
+            <div class="tracker-step" id="step-found">
+              <div class="step-dot"><span class="step-pulse"></span></div>
+              <div class="step-content">
+                <strong>Donor Found</strong>
+                <p>Compatible donor matched and notified</p>
+              </div>
+            </div>
+            <div class="tracker-step" id="step-onway">
+              <div class="step-dot"><span class="step-pulse"></span></div>
+              <div class="step-content">
+                <strong>On the Way</strong>
+                <p>Donor is heading to the hospital</p>
+              </div>
+            </div>
+            <div class="tracker-step" id="step-completed">
+              <div class="step-dot"><span class="step-pulse"></span></div>
+              <div class="step-content">
+                <strong>Completed</strong>
+                <p>Blood successfully transfused</p>
+              </div>
+            </div>
+          </div>
+          <div class="tracker-progress-bar">
+            <div class="tracker-progress-fill" id="trackerProgressFill"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="logo"><span class="logo-icon">&#9829;</span> BloodLink <span class="logo-ai">AI</span></span>
+          <p>AI-powered blood donor matching network saving lives every day.</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="register.html">Register</a>
+          <a href="request.html">Request Blood</a>
+          <a href="matching.html">Smart Match</a>
+          <a href="history.html">History</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 BloodLink AI. All rights reserved. Every donation saves up to 3 lives.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- City Suggestions -->
+  <datalist id="cityList">
+    <option value="Lahore">
+    <option value="Karachi">
+    <option value="Islamabad">
+    <option value="Rawalpindi">
+    <option value="Faisalabad">
+    <option value="Multan">
+    <option value="Peshawar">
+    <option value="Quetta">
+    <option value="Sialkot">
+    <option value="Gujranwala">
+    <option value="Hyderabad">
+    <option value="Bahawalpur">
+    <option value="Sargodha">
+    <option value="Sukkur">
+    <option value="Larkana">
+    <option value="Abbottabad">
+    <option value="Mardan">
+    <option value="Muzaffarabad">
+    <option value="Dera Ghazi Khan">
+    <option value="Sahiwal">
+    <option value="Nawabshah">
+    <option value="Mirpur Khas">
+    <option value="Jhang">
+    <option value="Sheikhupura">
+    <option value="Kasur">
+    <option value="Rahim Yar Khan">
+    <option value="Gujrat">
+    <option value="Mingora">
+    <option value="Dera Ismail Khan">
+    <option value="Chiniot">
+  </datalist>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Notification Preview Overlay -->
+  <div id="notificationOverlay" class="notification-overlay">
+    <div class="notification-phone">
+      <div class="notification-header">
+        <span class="notif-app-icon">&#9829;</span>
+        <span class="notif-app-name">BloodLink AI</span>
+        <span class="notif-time">now</span>
+      </div>
+      <div class="notification-body">
+        <h4 id="notifTitle">&#127881; Match Found!</h4>
+        <p id="notifMessage">A compatible donor has been found for your request.</p>
+      </div>
+      <div class="notification-sms">
+        <div class="sms-icon">&#128172;</div>
+        <div class="sms-content">
+          <strong>SMS Alert</strong>
+          <p id="smsMessage">BloodLink AI: Compatible donor found! Donor is being notified. Track status in the app.</p>
+        </div>
+      </div>
+    </div>
+    <button class="notif-close" id="notifClose">&times;</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
