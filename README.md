@@ -12,6 +12,8 @@ The result? Precious hours wasted at the worst possible moment.
 
 BloodLink AI is a responsive web prototype that shows how a centralized donor network could eliminate this bottleneck. It lets donors register their details, allows patients or families to submit urgent blood requests, and instantly matches requests with the most compatible available donors based on blood type, location, and readiness to donate.
 
+
+
 This demo is built as a browser-based proof of concept, giving judges and stakeholders a hands-on walkthrough of the entire user journey — from registration to real-time tracking to a completed donation certificate.
 
 **Who it's for right now:** voluntary blood donors, patients and family members requesting blood, and hospital coordinators previewing how automated matching could work.
@@ -69,4 +71,21 @@ These are the natural next steps on the roadmap once the core experience is vali
 
 ## Looking Ahead
 
-BloodLink AI is more than a dashboard — it's a vision for a world where no one dies waiting for blood that already exists. With SMS integration, geospatial routing, verified donor profiles, and hospital dashboards, this prototype can grow into a national emergency response layer for blood donation.
+BloodLink AI is more than a dashboard — it's a vision for a world where no one dies waiting for blood that already exists. With SMS 
+integration, geospatial routing, verified donor profiles, and hospital dashboards, this prototype can grow into a national emergency response layer for blood donation.
+
+## A vision by:
+SYEDA ASMA JAMIL (Frontend Development)
+AYESHA IMRAN (Backend Development)
+
+
+
+
+
+
+
+
+
+
+
+
