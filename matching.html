@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BloodLink AI - Smart blood donor matching network powered by AI">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩸</text></svg>" type="image/svg+xml">
+  <title>AI Smart Matching — BloodLink AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="page-matching">
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-content">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">&#9829;</span> BloodLink <span class="logo-ai">AI</span>
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span class="theme-icon moon">&#9790;</span>
+        <span class="theme-icon sun">&#9728;</span>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="request.html">Request Blood</a></li>
+        <li><a href="matching.html" class="active">Smart Match</a></li>
+        <li><a href="history.html">History</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1>AI Smart Matching</h1>
+      <p>Our intelligent algorithm matches blood requests with compatible donors based on blood group compatibility, location proximity, and availability.</p>
+    </div>
+  </section>
+
+<!-- Smart Matching -->
+  <section class="section" id="matching">
+    <div class="container">
+      <!-- Pending Requests (fed by submitted blood requests) -->
+      <div class="pending-requests" id="pendingRequests" style="display:none;">
+        <div class="pending-header">
+          <h3><span class="pending-pulse" aria-hidden="true"></span> Pending Blood Requests</h3>
+          <span class="pending-count" id="pendingCount"></span>
+        </div>
+        <p class="pending-hint">These requests are still waiting for a donor. Click one to auto-fill the filters and run AI matching for it — the most urgent request is pre-selected.</p>
+        <div class="pending-list" id="pendingRequestsList"></div>
+      </div>
+
+      <div class="matching-controls">
+        <div class="form-group">
+          <label for="filterBlood">Filter by Blood Group</label>
+          <select id="filterBlood">
+            <option value="">All Blood Groups</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="filterLocation">Filter by Location</label>
+          <input type="text" id="filterLocation" list="cityList" placeholder="e.g. Lahore">
+        </div>
+        <button class="btn btn-primary" id="findMatches">
+          &#128269; Find Compatible Donors
+        </button>
+      </div>
+
+      <div class="matching-info">
+        <div class="info-card">
+          <h3>&#129504; How AI Matching Works</h3>
+          <div class="matching-steps">
+            <div class="match-step">
+              <span class="step-num">1</span>
+              <p><strong>Blood Compatibility:</strong> Uses medical compatibility rules (e.g., O- is universal donor, AB+ is universal recipient)</p>
+            </div>
+            <div class="match-step">
+              <span class="step-num">2</span>
+              <p><strong>Location Matching:</strong> Prioritizes donors closest to the request location for faster delivery</p>
+            </div>
+            <div class="match-step">
+              <span class="step-num">3</span>
+              <p><strong>Smart Scoring:</strong> Each match gets a compatibility score based on blood type, location, and urgency</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Which request the matching below runs against -->
+      <div class="match-context" id="matchContext" style="display:none;" aria-live="polite"></div>
+
+      <div id="matchResults" class="match-results">
+        <div class="empty-state">
+          <div class="empty-icon">&#128269;</div>
+          <h3>No Matches Yet</h3>
+          <p>Register donors and submit blood requests to see AI-powered matching results here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Compatibility Chart -->
+  <section class="section section-alt" id="compatibility">
+    <div class="container">
+      <div class="section-header">
+        <h2>Blood Compatibility Chart</h2>
+        <p>Understanding blood type compatibility is crucial for safe transfusions.</p>
+      </div>
+      <div class="compat-table-wrapper">
+        <table class="compat-table">
+          <caption>Donor (rows) to recipient (columns) blood group compatibility matrix</caption>
+          <thead>
+            <tr>
+              <th scope="col">Recipient &#8594;</th>
+              <th scope="col">A+</th><th scope="col">A-</th><th scope="col">B+</th><th scope="col">B-</th>
+              <th scope="col">AB+</th><th scope="col">AB-</th><th scope="col">O+</th><th scope="col">O-</th>
+            </tr>
+          </thead>
+          <tbody id="compatTableBody"></tbody>
+        </table>
+      </div>
+      <p class="compat-legend">&#9989; Compatible &nbsp;&nbsp; &#10060; Incompatible</p>
+    </div>
+  </section>
+
+
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="logo"><span class="logo-icon">&#9829;</span> BloodLink <span class="logo-ai">AI</span></span>
+          <p>AI-powered blood donor matching network saving lives every day.</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="register.html">Register</a>
+          <a href="request.html">Request Blood</a>
+          <a href="matching.html">Smart Match</a>
+          <a href="history.html">History</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 BloodLink AI. All rights reserved. Every donation saves up to 3 lives.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- City Suggestions -->
+  <datalist id="cityList">
+    <option value="Lahore">
+    <option value="Karachi">
+    <option value="Islamabad">
+    <option value="Rawalpindi">
+    <option value="Faisalabad">
+    <option value="Multan">
+    <option value="Peshawar">
+    <option value="Quetta">
+    <option value="Sialkot">
+    <option value="Gujranwala">
+    <option value="Hyderabad">
+    <option value="Bahawalpur">
+    <option value="Sargodha">
+    <option value="Sukkur">
+    <option value="Larkana">
+    <option value="Abbottabad">
+    <option value="Mardan">
+    <option value="Muzaffarabad">
+    <option value="Dera Ghazi Khan">
+    <option value="Sahiwal">
+    <option value="Nawabshah">
+    <option value="Mirpur Khas">
+    <option value="Jhang">
+    <option value="Sheikhupura">
+    <option value="Kasur">
+    <option value="Rahim Yar Khan">
+    <option value="Gujrat">
+    <option value="Mingora">
+    <option value="Dera Ismail Khan">
+    <option value="Chiniot">
+  </datalist>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
