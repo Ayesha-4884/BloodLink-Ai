@@ -75,7 +75,7 @@ BloodLink AI is more than a dashboard — it's a vision for a world where no one
 integration, geospatial routing, verified donor profiles, and hospital dashboards, this prototype can grow into a national emergency response layer for blood donation.
 
 ## A vision by:
-SYEDA ASMA JAMIL
+SYEDA ASMA JAMIL and
 AYESHA IMRAN 
 
 
