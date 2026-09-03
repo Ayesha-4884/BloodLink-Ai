@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BloodLink AI - Smart blood donor matching network powered by AI">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🩸</text></svg>" type="image/svg+xml">
+  <title>Donation History — BloodLink AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+</head>
+<body class="page-history">
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-content">
+      <a href="index.html" class="logo">
+        <span class="logo-icon">&#9829;</span> BloodLink <span class="logo-ai">AI</span>
+      </a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span class="theme-icon moon">&#9790;</span>
+        <span class="theme-icon sun">&#9728;</span>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="request.html">Request Blood</a></li>
+        <li><a href="matching.html">Smart Match</a></li>
+        <li><a href="history.html" class="active">History</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <span class="section-badge">Your Record</span>
+      <h1>Donation History</h1>
+      <p>Verify your donor identity to view your own donation record and download your certificates.</p>
+    </div>
+  </section>
+
+  <!-- My Record — Donor Verification -->
+  <section class="section" id="my-record">
+    <div class="container">
+      <div class="form-card verify-card" id="verifyCard">
+        <form id="verifyForm" novalidate>
+          <div class="verify-intro">
+            <h3>&#128274; Verify Your Identity</h3>
+            <p>Donation records are private. Confirm your Donor ID and CNIC to see your own donations — only you can download your certificates.</p>
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="verifyDonorId">Donor ID <span class="required">*</span></label>
+              <input type="text" id="verifyDonorId" placeholder="e.g. D-1002" required aria-describedby="verifyDonorIdError" aria-invalid="false">
+              <span class="error-msg" id="verifyDonorIdError"></span>
+            </div>
+            <div class="form-group">
+              <label for="verifyCnic">CNIC (last 4 digits) <span class="required">*</span></label>
+              <input type="text" id="verifyCnic" placeholder="e.g. 8832" maxlength="4" required aria-describedby="verifyCnicError" aria-invalid="false">
+              <span class="error-msg" id="verifyCnicError"></span>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">
+            <span class="btn-icon">&#128100;</span> View My Donations
+          </button>
+          <p class="verify-demo-hint">Demo tip: use Donor ID <strong>D-1002</strong> with CNIC <strong>8832</strong>.</p>
+        </form>
+      </div>
+
+      <!-- Personal donation record — shown after verification -->
+      <div id="myRecord" class="my-record" style="display:none;">
+        <div id="myRecordSummary"></div>
+        <div class="my-record-actions">
+          <h3>My Donations</h3>
+          <button type="button" class="btn-link" id="switchDonor">&#8617; Switch donor</button>
+        </div>
+        <div id="myDonations"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Network Donation History (view-only) -->
+  <section class="section section-alt" id="history">
+    <div class="container">
+      <div class="section-header">
+        <h2>Network Donation History</h2>
+        <p>Every completed donation across BloodLink AI. Certificates stay private — only the donor can download their own.</p>
+      </div>
+      <div id="donationHistory" class="donation-history">
+        <div class="empty-state">
+          <div class="empty-icon">&#128203;</div>
+          <h3>No Donations Yet</h3>
+          <p>Completed donations across the network will appear here after the first successful match.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="logo"><span class="logo-icon">&#9829;</span> BloodLink <span class="logo-ai">AI</span></span>
+          <p>AI-powered blood donor matching network saving lives every day.</p>
+        </div>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="register.html">Register</a>
+          <a href="request.html">Request Blood</a>
+          <a href="matching.html">Smart Match</a>
+          <a href="history.html">History</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 BloodLink AI. All rights reserved. Every donation saves up to 3 lives.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
